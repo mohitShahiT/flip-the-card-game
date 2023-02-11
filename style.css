@@ -1,0 +1,132 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Julee&display=swap');
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #191919;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.overlay-text{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    font-family: 'Special Elite';
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+.overlay-text-small{
+    font-size: 2rem;
+}
+
+.overlay-text.visible{
+    display: flex;
+    flex-direction: column;
+    animation: overlay-animation 500ms forwards;
+}
+
+@keyframes overlay-animation {
+    from{
+        background-color: rgba(0, 0, 0, 0);
+        font-size: 0;
+    }
+    to{
+        background-color: rgba(0,0,0,0.8);
+        font-size: 5rem;
+    }
+}
+
+.heading{
+    color: rgb(189, 189, 189);
+    font-family: 'Special Elite', cursive;
+    font-size: 3.2rem;
+    text-align: center;
+    margin: 20px 0px;
+}
+/* .game-container{
+    width: 60%;
+    height: 100vh;
+} */
+
+.game-info-container{
+    color: rgb(189, 189, 189);
+    font-family:'Julee', cursive;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 2rem;
+    grid-column: 1/-1;
+}
+
+.card-container{
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-gap: 20px;
+    perspective: 500px;
+    margin: 20px 0 40px 0;
+}
+.cards{
+    position: relative;
+    width: 110px;
+    height: 140px;
+    overflow: hidden;
+    border-radius: 7px;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.cards:hover{
+    transform: scale(1.05);
+}
+
+.cards.visible .card-back{
+    transform: rotateY(180deg);
+}
+
+.cards.visible .card-front{
+    transform: rotateY(0deg);
+    
+}
+
+
+
+
+.card-front{
+    transform: rotateY(-180deg);
+}
+
+
+.card-back,.card-front{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 7px;
+    border: 2px solid rgb(0, 0, 0);
+    transition: all 0.5s;
+    backface-visibility: hidden;
+}
+
+
+
+@media (max-width:600px) {
+    .card-container{
+        grid-template-columns: repeat(2, auto);
+    }
+    .game-info-container{
+        flex-direction: column;
+    }
+}
