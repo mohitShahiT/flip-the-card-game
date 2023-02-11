@@ -1,22 +1,10 @@
 const cardContainer = document.querySelector('.card-container')
-console.log(cardContainer)
-
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
-function shuffleArray(array) {
-    return array.sort(function() {
-      return 0.5 - Math.random();
-    });
-}
-
-
-
-//////////////////////////////////// game logic start ////////////////////////////////////////////////////////
 class AudioController{
     #flipSound;
     #backgroundSound;
@@ -33,6 +21,10 @@ class AudioController{
         this.#matchSound = new Audio('soundeffects/match.mp3');
     }
     flip(){
+        if(!this.#flipSound.ended){
+            this.#flipSound.pause();
+            this.#flipSound.currentTime = 0;
+        }
         this.#flipSound.play();
     }
     backgroundStop(){
@@ -51,41 +43,42 @@ class AudioController{
         this.#victorySound.play();
     }
     match(){
+        if(!this.#matchSound.ended){
+            this.#matchSound.pause();
+            this.#matchSound.currentTime = 0;
+        }
         this.#matchSound.play();
     }
 }
 
-let cardsArray = Array.from(document.getElementsByClassName('cards'));
-const overlaysArray = Array.from(document.getElementsByClassName('overlay-text'));
-
-
-
 class MemoryGame{
     #cards;
     #audioController;
+    #totalTime;
     constructor(totalTime, cardArray){
         this.#cards = cardArray;
-        this.totalTime = totalTime;
+        this.#totalTime = totalTime;
         this.timer = document.getElementById('time-remaining');
         this.fliper = document.getElementById('flips');
         this.#audioController = new AudioController();
-        this.timer.innerText = this.totalTime;
+        this.timer.innerText = this.#totalTime;
         this.fliper.innerText = 0;
     }
     startGame(){
         this.cardToCheck = null;
         this.totalFlips = 0;
-        this.timeRemaining = this.totalTime;
+        this.timeRemaining = this.#totalTime;
         this.matchedCards = [];
-        this.timer.innerText = this.totalTime;
+        this.timer.innerText = this.#totalTime;
         this.fliper.innerText = 0;
-        this.busy = false;
+        this.busy = true;
         this.#audioController.backgroundPlay();
         this.countDown = this.startCountDown();
         this.shuffel();
         this.flipAllCards();
         setTimeout(()=>{
             this.unflipAllCards()
+            this.busy = false;
         }, 2000)
     }
     shuffel(){
@@ -157,7 +150,6 @@ class MemoryGame{
         
     }
     getCardType(card){
-        // console.log(card.getElementsByClassName('card-front')[0].src)
         return card.getElementsByClassName('card-front')[0].src;
     }
 
@@ -182,6 +174,8 @@ class MemoryGame{
     }
 }
 
+const cardsArray = Array.from(document.getElementsByClassName('cards'));
+const overlaysArray = Array.from(document.getElementsByClassName('overlay-text'));
 const game = new MemoryGame(60, cardsArray);
 
 overlaysArray.forEach(overlay=>{
