@@ -176,7 +176,7 @@ class MemoryGame{
 
 const cardsArray = Array.from(document.getElementsByClassName('cards'));
 const overlaysArray = Array.from(document.getElementsByClassName('overlay-text'));
-const game = new MemoryGame(60, cardsArray);
+const game = new MemoryGame(30, cardsArray);
 
 overlaysArray.forEach(overlay=>{
     overlay.addEventListener('click',()=>{
