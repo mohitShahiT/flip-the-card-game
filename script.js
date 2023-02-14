@@ -165,7 +165,12 @@ class MemoryGame{
     gameOver(){
         clearInterval(this.countDown);
         this.#audioController.gameOver();
+        this.busy = true;
         document.getElementById('gameover-text').classList.add('visible');
+        setTimeout(()=>{
+            this.flipAllCards();
+        }, 500)
+        
     }
     victory(){
         clearInterval(this.countDown);
