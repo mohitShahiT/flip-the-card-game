@@ -123,8 +123,9 @@ body{
 
 
 @media (max-width:600px) {
-    .card-container{
-        grid-template-columns: repeat(2, auto);
+    .cards{
+        width: 55px;
+        height: 70px;
     }
     .game-info-container{
         flex-direction: column;
